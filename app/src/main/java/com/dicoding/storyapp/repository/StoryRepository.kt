@@ -3,6 +3,7 @@ package com.dicoding.storyapp.repository
 import com.dicoding.storyapp.model.Story
 import com.dicoding.storyapp.network.ApiService
 import retrofit2.HttpException
+import retrofit2.Response
 
 class StoryRepository(private val apiService: ApiService) {
 
