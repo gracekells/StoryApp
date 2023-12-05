@@ -2,6 +2,8 @@ package com.dicoding.storyapp.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.storyapp.R
 import com.dicoding.storyapp.databinding.ActivityAddStoryBinding
@@ -14,17 +16,31 @@ class AddStoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddStoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_story)
 
         storyViewModel = ViewModelProvider(this).get(StoryViewModel::class.java)
 
-        binding.btnAddStory.setOnClickListener{
-            val photoUrl = binding.edtPhotoUrl.text.toString()
-            val description = binding.edtDescription.text.toString()
+        binding.viewModel = ViewModelProvider(this).get(StoryViewModel::class.java)
 
-            storyViewModel.addStory(photoUrl, description)
-            finish()
+        binding.lifecycleOwner = this
+
+        storyViewModel.showAddStorySuccess.observe(this, { success ->
+            if (success){
+                Toast.makeText(this, "Story added successfully!", Toast,LENGTH_SHORT).show()
+            }
+        })
+
+        binding.btnAddStory.setOnClickListener{
+            uploadStory()
         }
+    }
+
+    private fun uploadStory() {
+        val photoUrl = "url_foto_yang_diupload"
+        val description = binding.edAddDescription.text.toString()
+
+        storyViewModel.addStory(photoUrl, description)
+
+        finish()
     }
 }

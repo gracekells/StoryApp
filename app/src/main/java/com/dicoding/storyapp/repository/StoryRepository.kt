@@ -14,11 +14,8 @@ class StoryRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun addStory(photo: String, description: String){
-        try {
-            apiService.addStory(photo, description)
-        } catch (e: HttpException){
-            throw Exception("Failed to add a new story. Please try again later")
-        }
+    suspend fun addStory(photoUrl: String, description: String): Response<AddStoryResponse> {
+        val token = userPreference.getUser().first().token
+        return apiService.addStory("Bearer &token", photoUrl, description)
     }
 }

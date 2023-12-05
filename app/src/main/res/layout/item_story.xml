@@ -23,7 +23,7 @@
             android:id="@+id/iv_item_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:srcCompat="@{story.photo}"/>
+            android:srcCompat="@{story.photoUrl}"/>
 
         <TextView
             android:id="@+id/tv_item_description"
